@@ -45,7 +45,8 @@
       {"field": "st", "type": "nominal", "title": "State"},
       {"field": "len", "type": "quantitative", "title": "Track Length (mi)"},
       {"field": "wid", "type": "quantitative", "title": "Path Width (yd)"},
-      {"field": "mag", "type": "ordinal", "title": "EF Rating"}
+      {"field": "mag", "type": "ordinal", "title": "EF Rating"},
+      {"field": "fat", "type": "quantitative", "title": "# of fatalities"}
     ]
   }
 }
