@@ -56,29 +56,34 @@
 .map-section {
   display: flex;
   flex-direction: column;
-  align-items: center;   /* centers horizontally */
+  align-items: center; /* centers everything horizontally */
   justify-content: flex-start;
   width: 100%;
 }
 
 #map {
-  width: 100%;           /* let Vega decide width */
-  align-items: center;
-  display: block;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;  /* centers Vega's SVG horizontally */
+  width: 100%;
+}
+
+#map > div {
+  margin: 0 auto;           /* ensure Vega embed div is centered */
 }
 
 .map-controls {
   display: flex;
-  flex-direction: column;  /* stack vertically */
-  gap: 6px;                /* spacing between dropdown + checkbox */
-  margin-top: 8px;         /* little space under the map */
+  flex-direction: column;
+  align-items: center;  /* center the dropdown + checkbox */
+  gap: 6px;
+  margin-top: 8px;
 }
 
 .map-controls label {
   font-weight: bold;
   margin-right: 5px;
 }
+
 
 .scatter-row {
   display: flex;
