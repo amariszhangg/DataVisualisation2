@@ -53,12 +53,17 @@
   margin-bottom: 10px; /* reduce space, default is usually ~20px */
 }
 
-  .map-section {
+.map-section {
   display: flex;
   flex-direction: column;
-  align-items: center;  /* centers the map + controls horizontally */
-  justify-content: center;
+  align-items: center;   /* centers horizontally */
+  justify-content: flex-start;
   width: 100%;
+}
+
+#map {
+  width: 100%;           /* let Vega decide width */
+  max-width: 800px;      /* optional limit */
 }
 
 .map-controls {
@@ -147,7 +152,6 @@
     <h3>Locations of Fatal Tornadoes</h3>
     <div class="map-section">
   <div id="map"></div>
-
   <div class="map-controls">
     <div id="stateControl"></div>
     <div id="nonFatalControl"></div>
