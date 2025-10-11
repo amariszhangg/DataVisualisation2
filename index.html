@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tornadoes in the United States (2020–2024)</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eaeaea; /* page background */
+      margin: 0;
+      padding: 40px 0;
+
+      background-image: url('bg.png'); /* replace with your image path */
+      background-size: cover;       /* make it fill the screen */
+      background-repeat: no-repeat; /* don’t tile */
+      background-position: center;  /* keep centered */
+      background-attachment: fixed; /* stay in place when scrolling */
+    }
+    .container {
+      max-width: 1000px;          /* skinnier container */
+      margin: 0 auto;
+      padding: 30px;
+      background-color: #ffffff; /* contrasting background */
+      border-radius: 12px;       /* rounded corners */
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* soft shadow */
+      text-align: center;
+
+      min-height: 100vh;         /* full vertical height */
+  display: flex;             /* make content stack properly */
+  flex-direction: column;    /* vertical order */
+  justify-content: flex-start; 
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+
+    p {
+      text-align: justify;
+      margin: 15px 0;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    h3 {
+      margin-top: 10px;
+  margin-bottom: 10px; /* reduce space, default is usually ~20px */
+}
+
+  .map-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* keep everything left aligned */
+}
+
+.map-controls {
+  display: flex;
+  flex-direction: column;  /* stack vertically */
+  gap: 6px;                /* spacing between dropdown + checkbox */
+  margin-top: 8px;         /* little space under the map */
+}
+
+.map-controls label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.scatter-row {
+  display: flex;
+  flex-direction: row;    /* explicit horizontal layout */
+  align-items: flex-start; /* top-align chart and text */
+  justify-content: space-between;
+  flex-wrap: wrap;        /* stack on narrow screens */
+  gap: 20px;              /* spacing between columns */
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.scatter-chart {
+  flex: 1 1 55%;          /* chart takes ~55% of row */
+  min-width: 300px;       /* ensures it doesn’t shrink too far */
+  max-width: 600px;       /* keeps it from dominating */
+}
+
+.scatter-text {
+  flex: 1 1 40%;          /* text takes ~40% of row */
+  min-width: 250px;       /* ensures readable width on smaller screens */
+  text-align: right;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+}
+
+.box-row {
+  display: flex;
+  flex-direction: row;    /* explicit horizontal layout */
+  align-items: flex-start; /* top-align chart and text */
+  justify-content: space-between;
+  flex-wrap: wrap;        /* stack on narrow screens */
+  gap: 20px;              /* spacing between columns */
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.box-chart {
+  flex: 1 1 55%;          /* chart takes ~55% of row */
+  min-width: 300px;       /* ensures it doesn’t shrink too far */
+  max-width: 600px;       /* keeps it from dominating */
+}
+
+.box-text {
+  flex: 1 1 35%;          /* text takes ~40% of row */
+  min-width: 250px;       /* ensures readable width on smaller screens */
+  text-align: left;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+}
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Tornadoes in the United States (2020–2024)</h1>
+
+    <p>
+      Tornadoes are by far most prevalent in the USA.
+      This data contains all recorded tornadoes from 2020 to 2024 inclusive. 
+      Use the filters to see data for non-fatal tornadoes and individual year statistics.
+    </p>
+
+    <h3>Locations of Fatal Tornadoes</h3>
+    <div class="map-section">
+  <div id="map"></div>
+
+  <div class="map-controls">
+    <div id="stateControl"></div>
+    <div id="nonFatalControl"></div>
+  </div>
+</div>
+
+    <p>
+      Tornadoes appear concentrated in the eastern half of the country. This is where the infamous "Tornado Alley" resides, 
+      comprising of states like Texas, Oklahoma, Tennessee, Missouri and Alabama. The flat geographical terrain 
+      and warm, moist air from the Gulf of Mexico create ideal conditions for tornado formation. 
+    </p>
+    
+    <p>
+      The deadliest tornado during this period was an EF4 tornado on December 10, 2021, resulting in 58 fatalities.
+      It impacted Arkansas, Missouri, Tennessee and Kentucky (aftermath in Kentucky pictured). This was one of 71 tornadoes in a two-day outbreak, 
+      which resulted in over $3.9 billion in property damages. 
+      However, most tornadoes did not result in any fatalities, as indicated by the grey dots.
+    </p>
+
+    <h3>Tornadoes per Month</h3>
+    <div id="line"></div>
+
+    <p>
+      April 2020 had the highest number of fatal tornadoes in a single month, while May 2024 had the highest monthly total number of
+      tornadoes (457). These months coincide with peak tornado season (late spring to early summer), when atmospheric conditions are most favorable.
+    </p>
+
+    <h3>Tornado Track Length vs Path Width</h3>
+    <div class="scatter-row">
+        <div id="scatter" class="scatter-chart"></div>
+      <div class="scatter-text">
+        <p>
+          There is a weakly positive correlation between the length of a tornado's track and its path width. 
+          Longer track lengths generally indicate more powerful tornadoes, which tend to have wider paths.
+          We can also see a positive trend of EF ratings increasing with tornado width + length, going from blue (EF1) in the bottom left to red (EF4) in the northeasterly direction.
+        </p>
+      </div>
+    </div>
+    
+    <h3>Distribution of losses</h3>
+    <div class="box-row">
+      <div class="box-text">
+        <p>
+          This box plot indicates an obvious positive relationship between EF rating and losses, and this makes sense given the meanings of each EF rating. 
+          Although, it is interesting that the costliest tornado was an EF3 ($1504M), while the costliest EF4 tornado only caused $200M in damages.
+        </p>
+      </div>
+      <div id="box" class="box-chart"></div>
+    </div>
+
+    <footer style="font-size:9px !important">
+    <p><strong>Author:</strong> Amaris Zhang</p>
+    <p><strong>Sources:</strong> NOAA Storm Prediction Center, Wikipedia</p>
+    <p><strong>Date:</strong> 28 September 2025</p>
+  </footer>
+  </div>
+
+  <script type="text/javascript">
+    Promise.all([
+  vegaEmbed('#map', 'map.json'),
+  vegaEmbed('#line', 'line_chart.json'),
+  vegaEmbed('#scatter', 'scatterplot.json'),
+  vegaEmbed('#box', 'boxplot.json')
+]).then(results => {
+  const [mapChart, lineChart, scatterPlot, boxPlot] = results.map(r => r.view);
+
+  mapChart.addSignalListener('selectedState', (name, value) => {
+    [lineChart, scatterPlot, boxPlot].forEach(chart => {
+      chart.signal('selectedState', value).run();
+    });
+  });
+
+  mapChart.addSignalListener('includeNonFatal', (name, value) => {
+      [lineChart, scatterPlot, boxPlot].forEach(chart => {
+        chart.signal('includeNonFatal', value).run();
+      });
+    });
+
+  lineChart.addSignalListener('selectedYear', (name, value) => {
+    [mapChart, scatterPlot, boxPlot].forEach(chart => {
+      chart.signal('selectedYear', value).run();
+    });
+  });
+});
+  </script>
+
+</body>
+</html>

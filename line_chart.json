@@ -1,0 +1,118 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 350,
+
+  "data": {
+    "url": "tornado_data.csv"
+  },
+
+  "params": [
+    {
+      "name": "selectedYear",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "options": ["All", 2020, 2021, 2022, 2023, 2024],
+        "name": "Select Year: "
+      }
+    },
+    {
+      "name": "selectedState",
+      "value": ""
+    },
+    { "name": "includeNonFatal", "value": false }
+  ],
+
+  "transform": [
+    {
+      "filter": "datum.mag != -9 && (includeNonFatal || datum.fat > 0) && datum.yr >= 2020 && datum.yr <= 2024 && datum.st != 'PR' && datum.st != 'VI'"
+    },
+    {
+      "filter": "(!selectedState || datum.st == selectedState)"
+    },
+    { "filter": "(selectedYear == 'All') || (datum.yr == selectedYear)" },
+    {
+  "filter": "(includeNonFatal || datum.fat > 0)"
+},
+    {
+      "calculate": "month(datum.date)",
+      "as": "month"
+    },
+    {
+      "aggregate": [{"op": "count", "as": "tornadoes"}],
+      "groupby": ["month", "yr"]
+    },
+    {
+      "impute": "tornadoes",
+      "key": "month",
+      "keyvals": [0,1,2,3,4,5,6,7,8,9,10,11],
+      "groupby": ["yr"],
+      "value": 0
+    },
+    {
+      "calculate": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.month]",
+      "as": "month_name"
+    }
+  ],
+
+  "layer": [
+    {
+      "mark": {"type": "line", "point": true},
+      "encoding": {
+        "x": {
+          "field": "month",
+          "type": "ordinal",
+          "title": "Month",
+          "axis": {
+            "labelExpr": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.value]"
+          },
+          "scale": {"domain": [0,1,2,3,4,5,6,7,8,9,10,11]}
+        },
+        "y": {
+          "field": "tornadoes",
+          "type": "quantitative",
+          "title": "Number of Tornadoes"
+        },
+        "color": {
+          "field": "yr",
+          "type": "nominal",
+          "title": "Year",
+          "scale": {
+            "range": ["#00441b", "#238b45", "#66c2a4", "#b2e2e2", "#bcd1d6"]
+
+          }
+        },
+        "tooltip": [
+          {"field": "month_name", "type": "nominal", "title": "Month"},
+          {"field": "yr", "type": "ordinal", "title": "Year"},
+          {"field": "tornadoes", "type": "quantitative", "title": "Tornadoes"}
+        ]
+      }
+    },
+    {
+      "transform": [{"filter": "datum.month == 11"}],
+      "mark": {"type": "text", "dx": 5, "align": "left"},
+      "encoding": {
+        "x": {"field": "month", "type": "ordinal"},
+        "y": {"field": "tornadoes", "type": "quantitative"},
+        "text": {"field": "yr"},
+        "color": {"field": "yr", "type": "nominal"}
+      }
+    },
+    {
+  "data": {"values": [{}]},
+  "mark": {
+    "type": "text",
+    "text": "Peak tornado season appears to be from March to May",
+    "x": 500,          
+    "y": 40,           
+    "align": "right",  
+    "fontSize": 12,
+    "fontWeight": "bold",
+    "color": "black",
+    "opacity": 0.8
+  }
+}
+  ]
+}

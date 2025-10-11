@@ -1,0 +1,51 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 400,
+  "data": {"url": "tornado_data.csv"},
+
+  "params": [
+    {"name": "selectedState", "value": ""},
+    {"name": "selectedYear", "value": "All"},
+    { "name": "includeNonFatal", "value": false }
+  ],
+
+  "transform": [
+    {
+      "filter": "datum.mag != -9 && datum.yr >= 2020 && datum.st != 'PR' && datum.st != 'VI' && datum.loss > 0"
+    },
+    {
+      "filter": "(!selectedState || datum.st == selectedState)"
+    },
+    {
+      "filter": "(selectedYear == 'All') || (datum.yr == selectedYear)"
+    },
+    {
+  "filter": "(includeNonFatal || datum.fat > 0)"
+    },
+    {
+      "calculate": "datum.loss / 1000000", "as": "loss"
+    }
+  ],
+
+  "mark": {"type": "boxplot", "extent": "min-max"},
+
+  "encoding": {
+    "x": {"field": "mag", "type": "ordinal", "title": "EF Rating"},
+    "y": {
+      "field": "loss",
+      "type": "quantitative",
+      "title": "Losses ($M)",
+      "scale": {"type": "log"},
+      "axis": {"grid": false}
+    },
+    "tooltip": [
+      {"field": "mag", "title": "EF Rating"},
+      {"field": "min", "title": "Min Loss ($M)"},
+      {"field": "q1", "title": "Q1 ($M)"},
+      {"field": "median", "title": "Median ($M)"},
+      {"field": "q3", "title": "Q3 ($M)"},
+      {"field": "max", "title": "Max Loss ($M)"}
+    ]
+  }
+}

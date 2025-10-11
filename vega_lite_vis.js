@@ -1,0 +1,1 @@
+vegaEmbed('#map', 'map.json');

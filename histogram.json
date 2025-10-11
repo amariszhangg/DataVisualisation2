@@ -1,0 +1,52 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 400,
+
+  "data": {
+    "url": "tornado_data.csv"
+  },
+
+  "params": [
+    {"name": "selectedState", "value": ""},
+    { "name": "selectedYear", "value": "All" }
+  ],
+
+  "transform": [
+    {
+      "filter": "datum.mag != -9 && datum.yr >= 2020 && datum.yr <= 2024 && datum.st != 'PR' && datum.st != 'VI' && datum.fat > 0 && datum.inj > 0"
+    },
+    { "filter": "(!selectedState || datum.st == selectedState)" },
+{ "filter": "(selectedYear == 'All') || (datum.yr == selectedYear)" }
+  ],
+
+  "mark": "bar",
+
+  "encoding": {
+    "x": {
+      "field": "inj",
+      "bin": {"maxbins": 20},
+      "type": "quantitative",
+      "title": "Injuries"
+    },
+    "y": {
+      "aggregate": "count",
+      "type": "quantitative",
+      "title": "Number of Tornadoes"
+    },
+    "color": {
+      "field": "mag",
+      "type": "ordinal",
+      "title": "EF Rating",
+      "legend": null,
+      "scale": {
+        "range": ["#377eb8", "#4daf4a", "#ffd700", "#e41a1c"]
+      }
+    },
+    "tooltip": [
+      {"field": "inj", "type": "quantitative", "title": "Injuries"},
+      {"field": "mag", "type": "ordinal", "title": "EF Rating"},
+      {"aggregate": "count", "type": "quantitative", "title": "Tornadoes"}
+    ]
+  }
+}
