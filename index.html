@@ -56,8 +56,8 @@
 .map-section {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* centers everything horizontally */
-  justify-content: flex-start;
+  align-items: center; /* centers everything horizontally */
+  justify-content: center;
   width: 100%;
 }
 
@@ -69,6 +69,7 @@
 
 #map > div {
   margin: 0 auto;           /* ensure Vega embed div is centered */
+  transform: translateX(20px);
 }
 
 .map-controls {
@@ -159,11 +160,11 @@
     <h3>Locations of Fatal Tornadoes</h3>
     <div class="map-section">
   <div id="map"></div>
+</div>
   <div class="map-controls">
     <div id="stateControl"></div>
     <div id="nonFatalControl"></div>
   </div>
-</div>
 
     <p>
       Tornadoes appear concentrated in the eastern half of the country. This is where the infamous "Tornado Alley" resides, 
@@ -193,6 +194,8 @@
         <p>
           There is a weakly positive correlation between the length of a tornado's track and its path width. 
           Longer track lengths generally indicate more powerful tornadoes, which tend to have wider paths too.
+        </p>
+        <p>
           We can also see a positive trend of EF ratings increasing with tornado width + length, going from blue (EF1) in the bottom left to red (EF4) in the northeasterly direction.
         </p>
         <p>
@@ -205,8 +208,13 @@
     <div class="box-row">
       <div class="box-text">
         <p>
-          This box plot indicates an obvious positive relationship between EF rating and losses, and this makes sense given the meanings of each EF rating. 
-          Although, it is interesting that the costliest tornado was an EF3 ($1504M), while the costliest EF4 tornado only caused $200M in damages.
+          This box plot shows a clear positive relationship between EF rating and losses, from the rising median values, interquartile ranges and min/max ranges. It makes sense given the definitions of each EF rating. 
+        </p>
+        <p>
+          It is interesting that the costliest tornado was an EF3 ($1504M), while the costliest EF4 tornado only caused $200M in damages. These damages most likely location-dependent, causing more losses in more built-up areas.
+        </p>
+        <p>
+          The range for EF1 is noticeably much smaller than other EF ratings, which is understandable given that EF1 is the second weakest category, thus it is very unlikely to cause much in losses.
         </p>
       </div>
       <div id="box" class="box-chart"></div>
