@@ -32,7 +32,8 @@
 		"name": "California",
 		"capital": "Sacramento",
 		"lat": "38.555605",
-		"long": "-121.468926"
+		"long": "-121.468926",
+		"dy": -12, "dx": 0
 	},
 	{
 		"abbr": "CO",
