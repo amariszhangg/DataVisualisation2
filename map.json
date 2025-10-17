@@ -83,40 +83,6 @@
     "size": {"value": 50},
     "color": {"value": "lightgrey"}
 }},
-{
-      "data": {
-        "url": "state_capitals.json"
-      },
-      "transform": [
-    {
-      "filter": "!selectedState || datum.abbr == selectedState"
-    }
-  ],
-      "encoding": {
-        "longitude": {
-          "field": "long",
-          "type": "quantitative"
-        },
-        "latitude": {
-          "field": "lat",
-          "type": "quantitative"
-        }
-      },
-      "layer": [{
-        "mark": {
-          "type": "circle",
-          "color": "black"
-        }
-      }, {
-        "mark": {
-          "type": "text",
-          "dy": -10
-        },
-        "encoding": {
-          "text": {"field": "capital", "type": "nominal"}
-        }
-      }]
-    },
     {
       "data": {"url": "tornado_data.csv"},
       "transform": [
@@ -132,7 +98,7 @@
         "size": {
           "field": "fat",
           "type": "quantitative",
-          "title": "# of fatalities",
+          "title": "Number of fatalities",
           "scale": {"domain": [0, 60], "range": [100, 2000]}
         },
         "color": {
@@ -150,7 +116,7 @@
           {"field": "date", "type": "ordinal", "title": "Date"},
           {"field": "st", "type": "nominal", "title": "State"},
           {"field": "mag", "type": "ordinal", "title": "EF Rating"},
-          {"field": "fat", "type": "quantitative", "title": "# of fatalities"},
+          {"field": "fat", "type": "quantitative", "title": "Fatalities"},
           {"field": "len", "type": "quantitative", "title": "Track Length (mi)"}
         ]
       }
@@ -177,6 +143,33 @@
       "encoding": {
         "text": {"field": "label", "type": "nominal"}
       }
+    },
+    {
+  "data": {"url": "state_capitals.json"},
+  "encoding": {
+    "longitude": {"field": "long", "type": "quantitative"},
+    "latitude": {"field": "lat", "type": "quantitative"}
+  },
+  "layer": [
+    {
+      "mark": {"type": "circle", "color": "black"} 
+    },
+    {
+      "transform": [
+        { "filter": "selectedState && datum.abbr == selectedState" }  
+      ],
+      "mark": {
+        "type": "text",
+        "dy": -10,
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#f70101"
+      },
+      "encoding": {
+        "text": {"field": "capital", "type": "nominal"}
+      }
     }
+  ]
+}
   ]
 }
