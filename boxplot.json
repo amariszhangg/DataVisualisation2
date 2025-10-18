@@ -11,24 +11,14 @@
   ],
 
   "transform": [
-    {
-      "filter": "datum.mag != -9 && datum.yr >= 2020 && datum.st != 'PR' && datum.st != 'VI' && datum.loss > 0"
-    },
-    {
-      "filter": "(!selectedState || datum.st == selectedState)"
-    },
-    {
-      "filter": "(selectedYear == 'All') || (datum.yr == selectedYear)"
-    },
-    {
-  "filter": "(includeNonFatal || datum.fat > 0)"
-    },
-    {
-      "calculate": "datum.loss / 1000000", "as": "loss"
-    }
+    { "filter": "datum.mag != -9 && datum.yr >= 2020 && datum.st != 'PR' && datum.st != 'VI' && datum.loss > 0"},
+    { "filter": "(!selectedState || datum.st == selectedState)" },
+    { "filter": "(selectedYear == 'All') || (datum.yr == selectedYear)" },
+    { "filter": "(includeNonFatal || datum.fat > 0)" },
+    { "calculate": "datum.loss / 1000000", "as": "loss" }
   ],
 
-  "mark": {"type": "boxplot", "extent": "min-max"},
+  "mark": {"type": "boxplot", "extent": "min-max", "color": "#238b45"},
 
   "encoding": {
     "x": {"field": "mag", "type": "ordinal", "title": "EF Rating"},
