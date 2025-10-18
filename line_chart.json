@@ -3,9 +3,7 @@
   "width": 600,
   "height": 350,
 
-  "data": {
-    "url": "tornado_data.csv"
-  },
+  "data": {"url": "tornado_data.csv"},
 
   "params": [
     {
