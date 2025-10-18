@@ -36,17 +36,14 @@
       "field": "mag",
       "type": "ordinal",
       "legend": null,
-      "scale": {
-        "range": ["#377eb8", "#4daf4a", "#ffd700", "#e41a1c"]
-      }
+      "scale": { "range": ["#377eb8", "#4daf4a", "#ffd700", "#e41a1c"] }
     },
     "tooltip": [
       {"field": "date", "type": "temporal", "title": "Date"},
       {"field": "st", "type": "nominal", "title": "State"},
       {"field": "len", "type": "quantitative", "title": "Track Length (mi)"},
       {"field": "wid", "type": "quantitative", "title": "Path Width (yd)"},
-      {"field": "mag", "type": "ordinal", "title": "EF Rating"},
-      {"field": "fat", "type": "quantitative", "title": "# of fatalities"}
+      {"field": "mag", "type": "ordinal", "title": "EF Rating"}
     ]
   }
 }
