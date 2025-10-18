@@ -4,9 +4,7 @@
   "width": 760,
   "height": 400,
   
-  "projection": {
-    "type": "albersUsa"
-  },
+  "projection": { "type": "albersUsa" },
 
   "params": [
     {
@@ -22,7 +20,7 @@
         "OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WI","WV","WY"
         ],
         "labels": [
-"All",
+        "All",
         "Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida",
         "Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana",
         "Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana",
@@ -41,18 +39,13 @@
   ],
 
   "config": {
-    "view": {
-      "stroke": "black",
-      "strokeWidth": 2
-    }
+    "view": { "stroke": "black", "strokeWidth": 2 }
   },
+
   "layer": [
     {
-      "data": {
-        "url": "ne_110m.json",
-        "format": {"type": "topojson", "feature": "ne_110m_admin_1_states_provinces"}
-      },
-
+      "data": { "url": "ne_110m.json",
+                "format": {"type": "topojson", "feature": "ne_110m_admin_1_states_provinces"} },
       "mark": {"type": "geoshape", "fill": "white", "stroke": "black"}
     },
     {
@@ -61,34 +54,23 @@
     },
     
     {
-  "data": {"url": "tornado_data.csv"},
-  "transform": [
-    {
-      "filter": "(datum.mag != -9) && datum.yr >= 2020 && datum.fat == 0 && datum.st != 'PR' && datum.st != 'VI'"
-    },
-    {
-      "filter": "(!selectedState || datum.st == selectedState)"
-    },
-    {
-      "filter": "includeNonFatal"
-    },
-    {
-      "filter": "(selectedYear == 'All') || (datum.yr == selectedYear)"
-    }
+      "data": {"url": "tornado_data.csv"},
+      "transform": [
+        { "filter": "(datum.mag != -9) && datum.yr >= 2020 && datum.fat == 0 && datum.st != 'PR' && datum.st != 'VI'" },
+        { "filter": "(!selectedState || datum.st == selectedState)" },
+        { "filter": "includeNonFatal" },
+        { "filter": "(selectedYear == 'All') || (datum.yr == selectedYear)" }
   ],
   "mark": {"type": "point"},
   "encoding": {
     "longitude": {"field": "slon", "type": "quantitative"},
     "latitude": {"field": "slat", "type": "quantitative"},
-    "size": {"value": 50},
-    "color": {"value": "lightgrey"}
+    "size": {"value": 50}, "color": {"value": "lightgrey"}
 }},
     {
       "data": {"url": "tornado_data.csv"},
       "transform": [
-        {
-          "filter": "datum.mag != -9 && datum.yr >= 2020 && datum.fat > 0 && datum.st != 'PR' && datum.st != 'VI' && (!selectedState || datum.st == selectedState)"
-        },
+        { "filter": "datum.mag != -9 && datum.yr >= 2020 && datum.fat > 0 && datum.st != 'PR' && datum.st != 'VI' && (!selectedState || datum.st == selectedState)" },
         { "filter": "(selectedYear == 'All') || (datum.yr == selectedYear)" }
       ],
       "mark": {"type": "point"},
@@ -108,9 +90,7 @@
             "title": "EF rating (damage)",
             "labelExpr": "datum.label == '0' ? 'EF0 (light)' : datum.label == '1' ? 'EF1 (moderate)' : datum.label == '2' ? 'EF2 (considerable)' : datum.label == '3' ? 'EF3 (severe)' : datum.label == '4' ? 'EF4 (devastating)' : datum.label == '5' ? 'F5 (incredible)' : datum.label"
           },
-          "scale": {
-            "range": ["#377eb8", "#4daf4a", "#ffd700", "#e41a1c"]
-          }
+          "scale": { "range": ["#377eb8", "#4daf4a", "#ffd700", "#e41a1c"] }
         },
         "tooltip": [
           {"field": "date", "type": "ordinal", "title": "Date"},
@@ -124,9 +104,7 @@
     {
       "data": {"url": "tornado_data.csv"},
       "transform": [
-        {
-          "filter": "datum.mag != -9 && datum.yr >= 2020 && datum.st != 'PR' && datum.st != 'VI' && (!selectedState || datum.st == selectedState) && (includeNonFatal || datum.fat > 0)"
-        },
+        { "filter": "datum.mag != -9 && datum.yr >= 2020 && datum.st != 'PR' && datum.st != 'VI' && (!selectedState || datum.st == selectedState) && (includeNonFatal || datum.fat > 0)" },
         { "filter": "(selectedYear == 'All') || (datum.yr == selectedYear)" },
         {"aggregate": [{"op": "count", "as": "tornado_count"}]},
         {"calculate": "'Total Tornadoes: ' + datum.tornado_count", "as": "label"}
@@ -151,11 +129,8 @@
     "latitude": {"field": "lat", "type": "quantitative"}
   },
   "layer": [
-    {
-      "mark": {"type": "circle", "color": "black"} 
-    },
-    {
-      "transform": [
+    { "mark": {"type": "circle", "color": "black"}  },
+    { "transform": [
         { "filter": "selectedState && datum.abbr == selectedState" }  
       ],
       "mark": {
