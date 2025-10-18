@@ -17,26 +17,17 @@
         "name": "Select Year: "
       }
     },
-    {
-      "name": "selectedState",
-      "value": ""
-    },
+    { "name": "selectedState", "value": "" },
     { "name": "includeNonFatal", "value": false }
   ],
 
   "transform": [
-    {
-      "filter": "datum.mag != -9 && (includeNonFatal || datum.fat > 0) && datum.yr >= 2020 && datum.yr <= 2024 && datum.st != 'PR' && datum.st != 'VI'"
-    },
-    {
-      "filter": "(!selectedState || datum.st == selectedState)"
-    },
+    { "filter": "datum.mag != -9 && (includeNonFatal || datum.fat > 0) && datum.yr >= 2020 && datum.yr <= 2024 && datum.st != 'PR' && datum.st != 'VI'" },
+    { "filter": "(!selectedState || datum.st == selectedState)" },
     { "filter": "(selectedYear == 'All') || (datum.yr == selectedYear)" },
+    { "filter": "(includeNonFatal || datum.fat > 0)" },
     {
-  "filter": "(includeNonFatal || datum.fat > 0)"
-},
-    {
-      "calculate": "month(datum.date)",
+      "calculate": "month(datum.date)", 
       "as": "month"
     },
     {
